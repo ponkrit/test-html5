@@ -480,7 +480,7 @@ text-transform: uppercase; font-weight: 800; float: left; border: none; margin: 
 
 
 /*..... FOOTER ......*/
-.footer-dark{ padding:120px 0 0 0; background:#222;}
+.footer-dark{ padding:120px 0 0 0; background:#222; margin-top: -4px; }
 .footer-dark .main-title h1{background: url(../images/heading-light.png) no-repeat center 80px; color:#fff;}
 .footer-dark .get-touch{border-bottom: solid 1px #d3d3d3; padding: 0 0 65px 0; margin: 95px 0 0 0;}
 .footer-dark .get-touch .contact-us{float: left;}
