@@ -267,114 +267,58 @@ $("#blog-slide").owlCarousel({
 
 // JavaScript Document Form Validator
 
-function checkcontact(input) {
-    var pattern1 = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-    if (pattern1.test(input)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
+function validateEmail(input) {
+    var pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
 
+    return pattern.test(input);
+}
 
 function validateContact() {
-    var errors = "";
-    var name = document.getElementById("name");
-    var email_address = document.getElementById("email_address");
-    var msg = document.getElementById("msg");
-
-    if (name.value == "" || name.value == "Your Name") {
-        name.className = "error";
-        return false;
-    }
-    else if (email_address.value == "" || email_address.value == "E-mail Address") {
-        email_address.className = "last error";
-        return false;
-    }
-
-    else if (checkcontact(email_address.value) == false) {
-        email_address.className = "last error";
-        return false;
-    }
-    else if (msg.value == "" || msg.value == "Message") {
-        msg.className = "error";
-        return false;
-    }
-
-
-    else {
-        //document.coaches_form.submit();
-
-        $.ajax({
-            type: "POST",
-            url: "process.php",
-            data: $("#contact_form").serialize(),
-            success: function (msg) {
-                // alert(msg);
-
-                document.getElementById("name").value = "Your Name";
-                document.getElementById("name").className = "";
-                document.getElementById("email_address").value = "E-mail Address";
-                document.getElementById("email_address").className = "last";
-                document.getElementById("msg").value = "Message";
-                document.getElementById("msg").className = "";
-                $("#success_msg").fadeIn(2000);
-                $("#contact_form").fadeOut(2000);
-            }
-
-
-        });
-
-        setTimeout("$('#success_msg').fadeOut();", 6000);
-        setTimeout("$('#contact_form').fadeIn();", 6000);
-    }
-}
-
-
-function validateReservation() {
     var name = $("#name").val();
     var company = $("#company").val();
     var email = $("#email").val();
     var phone = $("#phone").val();
     var message = $("#message").val();
 
-    if (name.value == "") {
+    if (name == "") {
         var errorMessage = 'Please provide your name.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
-    if (company.value == "") {
+    if (company == "") {
         var errorMessage = 'Please provide your company.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
-    if (email.value == "") {
+    if (email == "") {
         var errorMessage = 'Please provide your email.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
-    if (!checkcontact(email.value)) {
+    console.log('email: ', email);
+    console.log('validateEmail: ', validateEmail(email));
+
+    if (!validateEmail(email)) {
         var errorMessage = 'Please provide a valid email address.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
-    if (phone.value == "") {
+    if (phone == "") {
         var errorMessage = 'Please provide your phone no.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
-    if (message.value == "") {
+    if (message == "") {
         var errorMessage = 'Please provide your message.<br />';
         displayContactError(errorMessage);
 
@@ -383,21 +327,19 @@ function validateReservation() {
 
     $.ajax({
         type: "POST",
-        url: "process.php",
+        url: "contact.php",
         data: $("#reserv_form").serialize(),
         success: function (msg) {
             document.getElementById("reserv_error").style.display = "none";
-            $("#name").val();
-            $("#company").val();
-            $("#email").val();
-            $("#phone").val();
-            $("#message").val();
+            $("#name").val('');
+            $("#company").val('');
+            $("#email").val('');
+            $("#phone").val('');
+            $("#message").val('');
 
             $("#reserv_success_msg").fadeIn(2000);
             $("#reserv_form").fadeOut(2000);
         }
-
-
     });
 
     setTimeout("$('#reserv_success_msg').fadeOut();", 6000);
