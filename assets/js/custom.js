@@ -274,6 +274,7 @@ function validateEmail(input) {
 }
 
 function validateContact() {
+    var errorMessage = '';
     var name = $("#name").val();
     var company = $("#company").val();
     var email = $("#email").val();
@@ -281,45 +282,42 @@ function validateContact() {
     var message = $("#message").val();
 
     if (name == "") {
-        var errorMessage = 'Please provide your name.<br />';
+        errorMessage = 'Please provide your name.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
     if (company == "") {
-        var errorMessage = 'Please provide your company.<br />';
+        errorMessage = 'Please provide your company.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
     if (email == "") {
-        var errorMessage = 'Please provide your email.<br />';
+        errorMessage = 'Please provide your email.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
-    console.log('email: ', email);
-    console.log('validateEmail: ', validateEmail(email));
-
     if (!validateEmail(email)) {
-        var errorMessage = 'Please provide a valid email address.<br />';
+        errorMessage = 'Please provide a valid email address.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
     if (phone == "") {
-        var errorMessage = 'Please provide your phone no.<br />';
+        errorMessage = 'Please provide your phone no.<br />';
         displayContactError(errorMessage);
 
         return false;
     }
 
     if (message == "") {
-        var errorMessage = 'Please provide your message.<br />';
+        errorMessage = 'Please provide your message.<br />';
         displayContactError(errorMessage);
 
         return false;
@@ -337,13 +335,19 @@ function validateContact() {
             $("#phone").val('');
             $("#message").val('');
 
-            $("#reserv_success_msg").fadeIn(2000);
-            $("#reserv_form").fadeOut(2000);
+            if (msg == 1) {
+                $("#reserv_success_msg").fadeIn(2000);
+                $("#reserv_form").fadeOut(2000);
+
+                setTimeout("$('#reserv_success_msg').fadeOut();", 6000);
+                setTimeout("$('#reserv_form').fadeIn();", 6000);
+            } else {
+                errorMessage = 'Occur some problem while send contact. Please try again or contact us by telephone.';
+                displayContactError(errorMessage);
+                return false;
+            }
         }
     });
-
-    setTimeout("$('#reserv_success_msg').fadeOut();", 6000);
-    setTimeout("$('#reserv_form').fadeIn();", 6000);
 }
 
 function displayContactError(errorMessage) {
